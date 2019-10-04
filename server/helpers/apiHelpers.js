@@ -14,13 +14,14 @@ const { API_KEY } = require('../../config.js');
 
 const apiHelpers = {
     search: function(request){
-       return axios(api.themoviedb.org/3/discover/movie, request)
+       return axios.get('api.themoviedb.org/3/discover/movie', request)
     },
 
     genre: function(request){
-        return axios(api.themoviedb.org/3/discover/movie, request)
+        return axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US
+        `)
     },
 
 }
 
-module.exports.apiHelpers = apiHelpers;
+module.exports = apiHelpers;

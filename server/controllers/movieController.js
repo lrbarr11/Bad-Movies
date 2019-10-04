@@ -1,4 +1,4 @@
-const {addFavorite, removeFavorite} = require('../models/movieModel.js');
+const {addFavorite, removeFavorite, getAll} = require('../models/movieModel.js');
 const apiHelpers = require('../helpers/apiHelpers.js');
 
 //Return requests to the client
@@ -34,9 +34,10 @@ module.exports = {
     
     // send back
     
-    apiHelpers.genres(req.body)
+    apiHelpers.genre()
     .then((genres) => {
-      res.send(genres)
+      
+      res.send(genres.data.genres)
     })
     .catch((err) => {
       console.log('error in getting genres', err)
@@ -47,9 +48,10 @@ module.exports = {
   saveMovie: (req, res) => {
     addFavorite(req.body, function(err, result){
       if(err){
+        console.log('error saving movie', err);
         res.sendStatus(500)
       }else{
-      console.log(result)
+      console.log('saved movie: ', result)
       res.sendStatus(200)}
     })
 
@@ -58,11 +60,24 @@ module.exports = {
   deleteMovie: (req, res) => {
     removeFavorite(req.body, function(err, result){
       if(err){
+        console.log('error deleting movie: ', err)
         res.sendStatus(500)
       }else{
       console.log('removed movie: ', result)
       res.sendStatus(200)
     }
+    })
+  },
+
+  getSaved: (req, res) => {
+    getAll(function(err, result){
+      if(err){
+        console.log('error saving movie: ', err)
+        res.sendStatus(500)
+      }else{
+        console.log('favorite movies: ', result)
+        res.send(result)
+      }
     })
   }
 }

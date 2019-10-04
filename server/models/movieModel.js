@@ -8,7 +8,7 @@ const sqlDb = require('../../db/sql');
 module.exports = {
 
     addFavorite: (req, callback) => {
-        sqlDb.query('INSERT INTO favorites (movies) VALUES ('+req.body+')', function(err, results){
+        sqlDb.connection.query('INSERT INTO favorites (movie) VALUES (\''+req.title+'\')', function(err, results){
             if(err){
                 console.log('error in insert: ', err)
                 callback(err, null)
@@ -19,7 +19,7 @@ module.exports = {
     },
 
     removeFavorite: (req, callback) => {
-        sqlDb.query('DELETE FROM favorites WHERE movies = \'' + req.body +'\'', function(err, results){
+        sqlDb.connection.query('DELETE FROM favorites WHERE movie = \'' + req.title +'\'', function(err, results){
             if(err){
                 console.log('error in remove: ', err)
                 callback(err, null)
@@ -27,6 +27,17 @@ module.exports = {
                 callback(null, results)
             }
         });
+    },
+
+    getAll: (callback) => {
+        sqlDb.connection.query('SELECT movie FROM favorites', function(err, results){
+            if(err){
+                console.log('error in getting all favorites: ', err)
+                callback(err, null);
+            }else {
+                callback(null, results)
+            }
+        })
     }
 
 }

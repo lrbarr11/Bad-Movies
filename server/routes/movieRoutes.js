@@ -8,5 +8,5 @@ router.get('/search', movieController.getSearch)
 router.get('/genres', movieController.getGenres)
 router.post('/save', movieController.saveMovie)
 router.delete('/delete', movieController.deleteMovie)
-
+router.get('/favorites', movieController.getSaved)
 module.exports = router;

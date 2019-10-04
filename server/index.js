@@ -1,6 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var request = require("request");
+var db = require('../db/sql');
 var app = express();
 
 // Sign up and get your moviedb API key here:
