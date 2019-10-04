@@ -10,3 +10,17 @@ const { API_KEY } = require('../../config.js');
 // Get your API Key and save it in your config file
 
 // Don't forget to export your functions and require them within your server file
+
+
+const apiHelpers = {
+    search: function(request){
+       return axios(api.themoviedb.org/3/discover/movie, request)
+    },
+
+    genre: function(request){
+        return axios(api.themoviedb.org/3/discover/movie, request)
+    },
+
+}
+
+module.exports.apiHelpers = apiHelpers;
