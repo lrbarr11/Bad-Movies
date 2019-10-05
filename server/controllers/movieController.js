@@ -15,11 +15,12 @@ module.exports = {
 
     // and sort them by horrible votes using the search parameters in the API
     
-    
+    console.log('inside getSearch: ', req.body);
     
     apiHelpers.search(req.body)
     .then((movies) => {
-      res.send(movies)
+      console.log('searched movies: ', movies.data)
+      res.send(movies.data)
     })
     .catch((err) => {
       console.log('error in movie search', err)
@@ -27,6 +28,22 @@ module.exports = {
     })
 
   },
+
+
+  getSearchedGenre: (req, res) => {
+    console.log('inside getSearchedGenre: ', req.body)
+    apiHelpers.movieGenre(req.body)
+    .then((movies) => {
+      console.log('searched genre: ', movies.data)
+      res.send(movies.data)
+    })
+    .catch((err) => {
+      console.log('error in searchedGenre: ', err)
+      res.sendStatus(500)
+    })
+  },
+
+  
   getGenres: (req, res) => {
     // make an axios request to get the list of official genres
     

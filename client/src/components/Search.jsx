@@ -5,9 +5,15 @@ class Search extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      genres: []
+      genres: [],
+      genre: {},
+      searched: '',
     };
     this.getGenres = this.getGenres.bind(this);
+    this.selectGenre = this.selectGenre.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+   
   }
 
   getGenres() {
@@ -17,6 +23,26 @@ class Search extends React.Component {
       this.setState({
         genres: genres.data
       })
+    })
+  }
+
+  selectGenre(e) {
+    console.log('selecting genre: ', e.target.value);
+    this.setState({
+      genre: e.target.value
+    })
+  }
+
+
+  handleSubmit(e){
+    e.preventDefault();   
+    this.props.getMovies(this.state.searched)
+  }
+
+  handleChange(e){
+    console.log('searched: ', e.target.value);
+    this.setState({
+      searched: e.target.value
     })
   }
 
@@ -33,14 +59,17 @@ componentDidMount(){
         {/* Make the select options dynamic from genres !!! */}
         {/* How can you tell which option has been selected from here? */}
 
-        <select>
+        <select value={this.state.genre} onChange={this.selectGenre} >
          {this.state.genres.map((genres) => {
-           return <option key={genres.id}>{genres.name}</option>
+           return <option key={genres.id} value={{id:genres.id, name: genres.name}}>{genres.name}</option>
          })}
         </select>
         <br/><br/>
-
-        <button>Search</button>
+        <button onClick={(event) => this.props.handleGenreSearch(event, this.state.genres.id)}>Search Genre</button>
+         <form onSubmit={this.handleSubmit}>
+           <input type='text' placeholder='Search Movies' onChange={this.handleChange}/>
+           <button onClick={this.handleSubmit}>Search</button>
+         </form>
 
       </div>
     );

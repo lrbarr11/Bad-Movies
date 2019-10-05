@@ -13,11 +13,16 @@ const { API_KEY } = require('../../config.js');
 
 
 const apiHelpers = {
-    search: function(request){
-       return axios.get('api.themoviedb.org/3/discover/movie', request)
+    searchGenre: function(request){
+      
+       return axios.get()
     },
 
-    genre: function(request){
+    movieGenre: function(request){
+        return axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.asc&with_genre=${request.genre}`)
+    },
+
+    genre: function(){
         return axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US
         `)
     },
